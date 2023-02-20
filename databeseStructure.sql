@@ -109,4 +109,33 @@ CREATE TABLE
         id CHAR(36) NOT NULL PRIMARY KEY,
         price_category VARCHAR(255) NOT NULL,
         price DECIMAL(4, 2) NOT NULL
-    )
+    );
+
+/* Je passe maintenant à la partie back-end. Je décide de m'occuper en premier des classes Role et User. Je crée donc deux tables qui porteront le nom roles et users. Ces deux tables ont une relation One To Many. La table users aura une référence vers la table roles. Il faut donc que je crée en premier la table roles. */
+
+CREATE TABLE
+    IF NOT EXISTS roles (
+        id CHAR(36) NOT NULL PRIMARY KEY,
+        name VARCHAR(255) NOT NULL
+    );
+
+CREATE TABLE
+    IF NOT EXISTS users (
+        id CHAR(36) NOT NULL PRIMARY KEY,
+        first_name VARCHAR(255) NOT NULL,
+        email VARCHAR(255) NOT NULL,
+        password VARCHAR(60) NOT NULL,
+        has_role CHAR(36) NOT NULL,
+        FOREIGN KEY (has_role) REFERENCES roles (id)
+    );
+
+/* Pour finir la création de ma base de données, je m'intéresse aux classes User et Cinema. Les deux tables correspondant à ces classes sont crées mais la relation entre elles n'est pas encore gérée. Ces tables ont une relation Many To Many. Il faut donc que je crée une table associative afin de gérer cette relation. Je décide pour cela de créer une table qui portera le nom management. */
+
+CREATE TABLE
+    IF NOT EXISTS management (
+        user_id CHAR(36) NOT NULL,
+        cinema_id CHAR(36) NOT NULL,
+        PRIMARY KEY (user_id, cinema_id),
+        FOREIGN KEY (user_id) REFERENCES users(id),
+        FOREIGN KEY (cinema_id) REFERENCES cinemas(id)
+    );
