@@ -9,7 +9,7 @@ CREATE DATABASE IF NOT EXISTS GDWFSCAUBDDEXAIII2A;
  Pour la table custumers faisant donc référence à la classe Custumer, les propriétés firstName, lastName, address, town, phoneNumber et email qui sont typées en String seront typées en VARCHAR de 255 caractères. La propriété zipCode sera comme dans la classe typée en INT avec une longueur de 5 chiffres. En effet un code postal est toujours composé de 5 chiffres. Enfin la propriété password qui est de type String dans ma classe sera hashé par le code et sera ensuite stocké dans ma base de données sous forme d'une chaine de caractéres de longueur 60.*/
 
 CREATE TABLE
-    IF NOT EXISTS custumers (
+    IF NOT EXISTS customers (
         id CHAR(36) NOT NULL PRIMARY KEY,
         first_name VARCHAR(255) NOT NULL,
         last_name VARCHAR(255) NOT NULL,
@@ -47,7 +47,7 @@ CREATE TABLE
         is_paid BOOLEAN NOT NULL,
         reserved_by CHAR(36) NOT NULL,
         reserved CHAR(36) NOT NULL,
-        FOREIGN KEY (reserved_by) REFERENCES custumers(id),
+        FOREIGN KEY (reserved_by) REFERENCES customers(id),
         FOREIGN KEY (reserved) REFERENCES movies(id)
     );
 
